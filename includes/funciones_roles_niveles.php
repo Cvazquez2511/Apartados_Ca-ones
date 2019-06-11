@@ -44,12 +44,13 @@
     function insertar_rol(){
         global $db;
         extract($_POST);
-
+        
         $insertar=$db ->insert("Roles",[
                                             "rol_Nombre"=>$nom,
                                             "rol_Descripcion"=>$desc,
                                             "rol_Estatus"=>$est ,
-                                            "rol_FechaAlta" => date("Y").date("m").date("d")
+                                            "rol_FechaAlta" => date("Y").date("m").date("d"),
+                                            "rol_modulos"=>$mod
                                             ]);
         if($insertar){
             echo "Registro existoso";
@@ -82,6 +83,7 @@
          $editar=$db ->update("Roles",["rol_Nombre"=>$nom,
                                         "rol_Descripcion"=>$desc,
                                         "rol_Estatus"=>$est,
+                                        "rol_modulos"=>$mod,
                                         ],["rol_Id"=>$id]);
         if($editar){
             echo "Edicion completada";

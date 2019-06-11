@@ -86,31 +86,42 @@ buttonRegistrar.click(function(){
         console.log("Registrando");
        ///console.log($(this).data("edicion"));
         ///e.preventDefault();
-        let name=$("#name").val();
-        let lastname=$("#lastname").val();
-        let email=$("#email").val();
-        let phone=$("#phone").val();
+        let nom=$("#name").val();
+        let mac=$("#mac").val();
+        let appat=$("#lastname").val();
+        let apmat=$("#lastnameM").val();
+        let cor=$("#email").val();
+        let tel=$("#phone").val();
+        let lis=$("#lista").val();
+        let tip=$("#tipo").val();
+        let niv=$("#nivel").val();
+       
         let obj={
-            accion: "solicitar_registro",
-            name: name,
-            lastname: lastname,
-            email: email,
-            phone: phone
+            accion: "registrar_usuarios",
+            nom: nom,
+            mac: mac,
+            appat: appat,
+            apmat: apmat,
+            tel: tel,
+            cor: cor,
+            lis: lis,
+            tip: tip,
+            niv: niv
         }
-        if(name=="" || lastname=="" || email=="" || phone==0){
-            alert("No dejes campos vacios");
+        if(mac=="" || nom=="" || appat=="" || lis==0 || apmat=="" || cor=="" || tel=="" || niv==""){
+          alert("No dejes campos vacios");
         }
-        if (!validateEmail(email)) {
+        if (!validateEmail(cor)) {
             alert("El campo de Correo es erróneo");
             return false;
-           }else{
-                $.ajax({
-                    url: "../includes/funciones_registro.php",
-                    type: "POST",
-                    dataType: "json",
-                    data: obj
-                 })
-            alert("Registro completado correctmante (Espere a que el Asesor de Sistemas active su cuenta)");
-            location.reload();
-           }
+        }else{
+          $.ajax({
+            url: "../includes/_funciones.php",
+            type: "POST",
+            dataType: "json",
+            data: obj
+          })
+          alert("Registro completado correctmante (Espere a que el Asesor de Sistemas active su cuenta");
+          location.reload();
+        }
     });

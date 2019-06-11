@@ -1,3 +1,7 @@
+<?php
+require_once '../back-core/session.php';
+require_once '../includes/_db.php';
+?>
 <!DOCTYPE html>
 <html dir="ltr" lang="es_MX">
 
@@ -74,7 +78,7 @@
                                     <div class="p-t-20">
                                         <button class="btn btn-info" id="to-recover" type="button"><i class="fas fa-user-plus m-r-5"></i> Registrarse</button>
                                         <button class="btn btn-success float-right" id="buttonSubmit" type="button">Ingresar</button>
-                                        <button id="btnRecuperarContraseña" class="btn btn-success float-right" id="buttonSubmit" type="button">¿Olvido su contraseña?</button>                                        
+                                        <!--<button id="btnRecuperarContraseña" class="btn btn-success float-right" id="buttonSubmit" type="button">¿Olvido su contraseña?</button>                         -->               
                                     </div>
                                 </div>
                             </div>
@@ -88,6 +92,13 @@
                     <div class="row m-t-20">
                         <!-- Form -->
                         <form class="col-12">
+                            <!--matricula-->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-danger text-white" id="basic-addon1"><i class="far fa-user"></i></span>
+                                </div>
+                                <input id= "mac" type="text" class="form-control form-control-lg" placeholder="Matrícula" aria-label="name" aria-describedby="basic-addon1">
+                            </div>
                             <!-- name -->
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -100,7 +111,13 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-danger text-white" id="basic-addon1"><i class="far fa-user"></i></span>
                                 </div>
-                                <input id="lastname"type="text" class="form-control form-control-lg" placeholder="Apellido(s)" aria-label="lastname" aria-describedby="basic-addon1">
+                                <input id="lastname"type="text" class="form-control form-control-lg" placeholder="Apellido Paterno" aria-label="lastname" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-danger text-white" id="basic-addon1"><i class="far fa-user"></i></span>
+                                </div>
+                                <input id="lastnameM"type="text" class="form-control form-control-lg" placeholder="Apellido Materno" aria-label="lastname" aria-describedby="basic-addon1">
                             </div>
                             <!-- email -->
                             <div class="input-group mb-3">
@@ -117,6 +134,46 @@
 
                                 <input id="phone" type="text" class="form-control form-control-lg phone-inputmask" placeholder="Teléfono" aria-label="name" aria-describedby="basic-addon1">
                             </div>
+                            <div class="form-group">
+                                <select id="lista">
+                                    <option value="0">Seleccionar campus</option>
+                                    <?php 
+                                        $campus = $db->select("Campus","*"); 
+                                            foreach ($campus as $campus => $cps) {
+                                    ?>
+                                        <option value="<?php echo $cps["cps_id"]?>"><?php echo $cps["cps_nombre"]?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                   <select id="nivel">
+                   <option value="0">Seleccionar Nivel educativo</option>
+                    <?php 
+                            $nivel = $db->select("Niveles","*"); 
+                            foreach ($nivel as $nivel => $niv) {
+                        ?>
+                                <option value="<?php echo $niv["niv_Id"]?>"><?php echo $niv["niv_Nombre"]?></option>
+                        <?php
+                            }
+                        ?>
+                   </select>
+                </div>   
+                            <div class="form-group">
+                                <select id="tipo">
+                                    <option value="0">Seleccionar Tipo de usuario</option>
+                                 <?php 
+                                    $tipo = $db->select("Roles","*"); 
+                                        foreach ($tipo as $tipo => $tyu) {
+                                ?>
+                                <option value="<?php echo $tyu["rol_Id"]?>"><?php echo $tyu["rol_Nombre"]?></option>
+                                <?php
+                                 }
+                                ?>
+                                </select>
+                            </div> 
+
 
                             <div class="row m-t-20 p-t-20 border-top border-secondary">
                                 <div class="col-12">
@@ -157,7 +214,7 @@
     <script src="./data/_validate.js"></script>
     <script src="./assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
     <script src="./dist/js/pages/mask/mask.init.js"></script>
-    <!--<script src="./data/main_registrar.js"></script>-->
+    
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->

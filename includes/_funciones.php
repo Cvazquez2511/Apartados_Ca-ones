@@ -18,11 +18,33 @@
             case 'mostrar_usuarios':
                 mostrar_usuarios();
             break;
+            case 'registrar_usuarios':
+                registrar_usuarios();
+            break;
 
         }
-            
     }
-
+    function registrar_usuarios(){
+        global $db;
+        extract($_POST);
+        $insertar=$db ->insert("usuarios",["usr_id" => $mac,
+                                            "usr_nombre"=>$nom,
+                                            "usr_appat"=>$appat,
+                                            "usr_apmat"=>$apmat,
+                                            "usr_email"=>$cor,
+                                            "usr_tel"=>$tel,
+                                            "cps_id"=>$lis,
+                                            "rol_Id"=>$tip,
+                                            "niv_Id"=>$niv,
+                                            "usr_fechA"=>date("Y").date("m").date("d"),
+                                            "usr_status"=>1
+                                            ]);
+        if($insertar){
+            echo "Registro existoso";
+        }else{
+            echo "Se ocasiono un error";
+	    }
+    }
     function insertar_usuarios(){
         global $db;
         extract($_POST);
@@ -34,7 +56,7 @@
                                             "usr_email"=>$cor,
                                             "usr_tel"=>$tel,
                                             "usr_password"=>$pass,
-                                            "usr_nivel"=>$niv,
+                                            "niv_Id"=>$niv,
                                             "cps_id"=>$lista,
                                             "rol_Id"=>$tip,
                                             "usr_fechA"=>date("Y").date("m").date("d"),
@@ -74,7 +96,7 @@
                                         "usr_email"=>$cor,
                                         "usr_tel"=>$tel,
                                         "usr_password"=>$pass,
-                                        "usr_nivel"=>$niv,
+                                        "niv_Id"=>$niv,
                                         "cps_id"=>$lista,
                                         "rol_Id"=>$tip,
                                         ],["usr_id"=>$id]);
@@ -90,7 +112,8 @@
         $consultar=$db->select("usuarios",
         [
             "[>]Campus"=>"cps_id",
-            "[>]Roles"=>"rol_Id"
+            "[>]Roles"=>"rol_Id",
+            "[>]Niveles"=>"niv_Id"
         ],
         [
             "usuarios.usr_id",
@@ -104,7 +127,9 @@
             "Campus.cps_id",
             "Campus.cps_nombre",
             "Roles.rol_Id",
-            "Roles.rol_Nombre"                                      
+            "Roles.rol_Nombre",
+            "Niveles.niv_Id",
+            "Niveles.niv_Nombre"                                      
         ],["usr_status"=>1,"ORDER" => [ "usr_fechA" => "ASC" ]
         ]); 
         echo json_encode($consultar);
